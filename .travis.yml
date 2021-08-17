@@ -10,26 +10,14 @@ script:
   - docker run -e CI=true umakanuri/react-test npm run test -- --coverage
 
 after_success:
-  - docker build -t umakanuri/multi-client ./client
-  - docker build -t umakanuri/multi-nginx ./nginx
-  - docker build -t umakanuri/multi-server ./server
-  - docker build -t umakanuri/multi-worker ./worker
+  - docker build -t ukanuri/multi-client ./client
+  - docker build -t ukanuri/multi-nginx ./nginx
+  - docker build -t ukanuri/multi-server ./server
+  - docker build -t ukanuri/multi-worker ./worker
   #Lon in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #The these images and push them to docker hub
-  - docker push umakanuri/multi-client
-  - docker push umakanuri/multi-nginx
-  - docker push umakanuri/multi-server
-  - docker push umakanuri/multi-worker
-
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "docker-react"
-  env: "Dockerreact-env"
-  bucket_name: "elasticbeanstalk-us-east-2-088745045272"
-  bucket_path: "docket-react"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  - docker push ukanuri/multi-client
+  - docker push ukanuri/multi-nginx
+  - docker push ukanuri/multi-server
+  - docker push ukanuri/multi-worker
